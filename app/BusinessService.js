@@ -2,7 +2,7 @@ import ApiService from "./ApiService";
 import {CATEGORIES, PRODUCTS} from "./ApiRoutes";
 
 export const getProductCategories = (locale, publisherId) => {
-  return Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     ApiService.get(CATEGORIES, {locale, publisherId})
       .then((response) => {
 
@@ -12,17 +12,15 @@ export const getProductCategories = (locale, publisherId) => {
 };
 
 export const getProducts = (locale, publisherId, term) => {
-  return Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     ApiService.get(PRODUCTS, {locale, publisherId, term})
-      .then((response) => {
-
-      })
+      .then((response) => resolve(response.products))
       .catch((error) => reject(error));
   });
 };
 
 export const getProductDetails = (locale, publisherId, productId) => {
-  return Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     ApiService.get(PRODUCTS + "/" + productId, {locale, publisherId})
       .then((response) => {
 

@@ -9,11 +9,15 @@ export default class ApiService {
 
   static get(url, params) {
     let completeUrl = BASE_URL + url + "?";
-    Object.keys(params).map((key) => completeUrl += params[key] + "&");
-    return Promise((resolve, reject) => {
-      fetch(completeUrl)
+    Object.keys(params).map((key) => completeUrl += (`${key}=${params[key]}&`));
+    console.log(completeUrl);
+    return new Promise((resolve, reject) => {
+      fetch(completeUrl, { headers: this.getHeader() })
         .then((response) => response.json())
-        .then((responseJson) => resolve(responseJson))
+        .then((responseJson) => {
+          console.log(responseJson);
+          return resolve(responseJson)
+        })
         .catch((error) => reject(error));
     });
   }
